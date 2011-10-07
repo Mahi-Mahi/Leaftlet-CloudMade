@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^tile/(.*)$ http://a.tile.cloudmade.com/b9b01715d8d0466d844e5ac97e2d4c60/997/256/$1 [L]
+#RewriteRule ^tile/(.*)$ /tile.php [L]

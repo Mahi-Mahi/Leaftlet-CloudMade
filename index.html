@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<!-- Leaflet CSS --> 
+	<link rel="stylesheet" href="leaflet/leaflet.css" />
+	<link rel="stylesheet" href="css/all.css">
+	<!--[if lte IE 8]><link rel="stylesheet" href="leaflet/leaflet.ie.css" /><![endif]-->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<!-- Leaflet JavaScript -->
+	<script src="leaflet/leaflet.js"></script>
+
+	<script type="text/javascript" charset="utf-8">
+		jQuery(document).ready(function(){
+			
+			// http://maps.google.fr/maps?q=porte+de+versailles&hl=en&ll=48.832478,2.285929&spn=0.008609,0.010986&sll=46.75984,1.738281&sspn=18.357034,14.128418&vpsrc=0&hnear=Porte+de+Versailles&t=h&z=17
+			
+			// initialize the map on the "map" div with a given center and zoom 
+			var map = new L.Map('map', {
+			    center: new L.LatLng(48.832478,2.285929), 
+			    zoom: 18,
+					minZoom: 17,
+					maxZoom: 30,
+			});
+
+			// create a CloudMade tile layer
+//			var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/b9b01715d8d0466d844e5ac97e2d4c60/997/256/{z}/{x}/{y}.png';
+			var cloudmadeUrl = '/tile/{z}/{x}/{y}.png';
+			var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 30});
+
+			// add the CloudMade layer to the map
+			map.addLayer(cloudmade);	
+
+		});
+
+	</script>
+	
+</head>
+<body>
+	
+	<div id="map"></div>
+	
+</body>
+</html>
