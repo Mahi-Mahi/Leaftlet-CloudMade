@@ -1,50 +1,32 @@
 <?php
 
-$host = preg_replace("(.proxy.web-staging.com|.proxy.localhost)", '', $_SERVER['HTTP_HOST']);
+$baseurl = 'http://a.tile.cloudmade.com/b9b01715d8d0466d844e5ac97e2d4c60/997/256/';
 
-$url = 'http://'.$host.$_SERVER['REQUEST_URI'];
+$url = $_SERVER['REQUEST_URI'];
 
-error_log($url . ' ( ' . $_SERVER['REMOTE_ADDR'] . ' ) '); 
+if ( preg_match("#^/tile/19#", $url))
+	exit();
 
-$ch = curl_init( $url );
-  
-if ( strtolower($_SERVER['REQUEST_METHOD']) == 'post' ) {
-	curl_setopt( $ch, CURLOPT_POST, true );
-	curl_setopt( $ch, CURLOPT_POSTFIELDS, $_POST );
-}
-  
-if ( $_GET['send_cookies'] ) {
-	$cookie = array();
-  foreach ( $_COOKIE as $key => $value ) {
-		$cookie[] = $key . '=' . $value;
-	}
-  if ( $_GET['send_session'] ) {
-    $cookie[] = SID;
-  }
-  $cookie = implode( '; ', $cookie );
-    
-  curl_setopt( $ch, CURLOPT_COOKIE, $cookie );
-}
-  
-curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, true );
-curl_setopt( $ch, CURLOPT_HEADER, true );
-curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-  
-curl_setopt( $ch, CURLOPT_USERAGENT, $_GET['user_agent'] ? $_GET['user_agent'] : $_SERVER['HTTP_USER_AGENT'] );
-  
-list( $header, $contents ) = preg_split( '/([\r\n][\r\n])\\1/', curl_exec( $ch ), 2 );
-  
-$status = curl_getinfo( $ch );
-  
-curl_close( $ch );
+$url = preg_replace("#^/tile/#", $baseurl, $url);
 
-// Propagate headers to response.
-foreach ( $header_text as $header ) {
-  if ( preg_match( '/^(?:Content-Type|Content-Language|Set-Cookie):/i', $header ) ) {
-    header( $header );
-  }
-}
+error_log($url);
 
-print $contents;
+$dest = $_SERVER['DOCUMENT_ROOT'].$_SERVER['REQUEST_URI'];
+
+error_log($dest);
+error_log(dirname($dest));
+
+@mkdir(dirname($dest));
+
+file_put_contents($dest, file_get_contents($url));
+
+
+header('Content-Type: image/png');
+
+readfile($dest);
+
+exit();
+
+
 
 ?>

@@ -1,5 +1,7 @@
 
-#map {
-	width: 2000px;
-	height: 1400px;
+#map, #map-bgd {
+	width: 800px;
+	height: 600px;
 }
+
+
