@@ -16,7 +16,7 @@ y = 180414
 
     p "#{x_crop} x #{y_crop}"
     
-    new = master.crop(i * 255, j * 255, 256, 256)
+    new = master.crop(i * 256, j * 256, 256, 256)
 
     FileUtils.mkdir_p "19/#{x_crop}"
     

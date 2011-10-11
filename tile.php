@@ -16,7 +16,7 @@ $dest = $_SERVER['DOCUMENT_ROOT'].$_SERVER['REQUEST_URI'];
 error_log($dest);
 error_log(dirname($dest));
 
-@mkdir(dirname($dest));
+@mkdir(dirname($dest), 0777, true);
 
 file_put_contents($dest, file_get_contents($url));
 

@@ -19,19 +19,37 @@
 			
 			// initialize the map on the "map" div with a given center and zoom 
 			var map = new L.Map('map', {
-			    center: new L.LatLng(48.8326, 2.2852), 
+			    center: new L.LatLng(48.83183, 2.2858), 
 			    zoom: 17,
-					minZoom: 17,
-					maxZoom: 30,
+					minZoom: 10,
+					maxZoom: 19,
 			});
 
 			// create a CloudMade tile layer
 //			var cloudmadeUrl = 'http://{s}.tile.cloudmade.com/b9b01715d8d0466d844e5ac97e2d4c60/997/256/{z}/{x}/{y}.png';
 			var cloudmadeUrl = '/tile/{z}/{x}/{y}.png';
-			var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 30});
+			var cloudmade = new L.TileLayer(cloudmadeUrl, {maxZoom: 19});
 
 			// add the CloudMade layer to the map
 			map.addLayer(cloudmade);	
+
+			var BrandIcon = L.Icon.extend({
+			    iconSize: new L.Point(57, 56),
+					iconAnchor: new L.Point(22, 22)
+			});
+			
+			var BMWIcon = new BrandIcon('/img/bmw.png');
+			
+			var BMWMarker = new L.Marker(new L.LatLng(48.83186, 2.28585), {icon: BMWIcon});
+
+			BMWMarker.bindPopup("Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in.");
+
+			
+			map.on('zoomend', function(){
+				console.log(map.getZoom());
+				if ( map.getZoom() > 17 ) 
+					map.addLayer(BMWMarker);
+			});
 
 		});
 
