@@ -43,10 +43,8 @@
 			var BMWMarker = new L.Marker(new L.LatLng(48.83186, 2.28585), {icon: BMWIcon});
 
 			BMWMarker.bindPopup("Sed molestie augue sit amet leo consequat posuere. Vestibulum ante ipsum primis in.");
-
 			
 			map.on('zoomend', function(){
-				console.log(map.getZoom());
 				if ( map.getZoom() > 17 ) 
 					map.addLayer(BMWMarker);
 			});
